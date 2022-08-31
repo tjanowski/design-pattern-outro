@@ -1,6 +1,6 @@
 package console;
 
-public interface ControllerEventSubscriber {
+public interface ControllerEventSubscriber { // TODO: Observer
     void onUpListener(Runnable up);
     void onDownListener(Runnable down);
     void onLeftListener(Runnable left);

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="NES" />
+        <module name="nes" />
         <module name="design-pattern-outro" />
       </profile>
     </annotationProcessing>

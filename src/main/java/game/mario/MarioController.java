@@ -9,7 +9,7 @@ public class MarioController {
 
     private final Queue<Event> sharedEventsQueue;
 
-    public MarioController(ControllerEventSubscriber eventSubscriber, Queue<Event> sharedEventsQueue) {
+    public MarioController(ControllerEventSubscriber eventSubscriber, Queue<Event> sharedEventsQueue) { // TODO: Decorator
 
         eventSubscriber.onUpListener(() -> System.out.println("Not used"));
         eventSubscriber.onUpListener(this::Crouch);
@@ -43,9 +43,7 @@ public class MarioController {
         sharedEventsQueue.add(Event.PAUSE);
     }
 
-    public void Jump() {
-        sharedEventsQueue.add(Event.JUMP);
-    }
+    public void Jump() { sharedEventsQueue.add(Event.JUMP); }
 
     public void Run() {
         sharedEventsQueue.add(Event.RUN);

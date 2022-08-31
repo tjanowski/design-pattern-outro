@@ -19,9 +19,16 @@ public class NES {
         controller.left();
         controller.left();
 
+        controller.right();
+        controller.right();
+        controller.right();
+
+
         controller.A();
-        controller.A();
-        controller.A();
+        controller.left();
+        controller.left();
+        controller.left();
+
     }
 
 }
