@@ -1,6 +1,6 @@
 package game.mario;
 
-public enum Event {
+public enum MarioEvent {
     START,
     PAUSE,
     MOVE_BACKWARD,

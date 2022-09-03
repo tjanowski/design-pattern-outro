@@ -1,6 +1,9 @@
 package console;
 
-public interface ControllerButton {
+/**
+ * Represent the physical button actionable on a base #Controller
+ */
+public interface Controller {
     void up();
     void down();
     void left();
@@ -10,3 +13,4 @@ public interface ControllerButton {
     void A();
     void B();
 }
+
