@@ -1,97 +1,82 @@
 package console;
 
-public class NesController implements ControllerButton, ControllerEventSubscriber {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    private final static Runnable DO_NOTHING = () -> System.out.println("NO ACTION");
+/**
+ * This class allow to bind a physical button on the #Controller to an arbitrary callback
+ */
+public class NesController implements Controller, ControllerCallback {
 
-    private Runnable upAction = DO_NOTHING;
-    private Runnable downAction = DO_NOTHING;
-    private Runnable leftAction = DO_NOTHING;
-    private Runnable rightAction = DO_NOTHING;
-    private Runnable startAction = DO_NOTHING;
-    private Runnable selectAction = DO_NOTHING;
-    private Runnable AAction = DO_NOTHING;
-    private Runnable BAction = DO_NOTHING;
+    private static final Logger LOG = LoggerFactory.getLogger(NesController.class);
 
+    private final static ButtonCallback DO_NOTHING = () -> LOG.debug("NO ACTION");
+
+    private ButtonCallback upAction = DO_NOTHING;
+    private ButtonCallback downAction = DO_NOTHING;
+    private ButtonCallback leftAction = DO_NOTHING;
+    private ButtonCallback rightAction = DO_NOTHING;
+    private ButtonCallback startAction = DO_NOTHING;
+    private ButtonCallback selectAction = DO_NOTHING;
+    private ButtonCallback AAction = DO_NOTHING;
+    private ButtonCallback BAction = DO_NOTHING;
 
     @Override
     public void up() {
-        upAction.run();
+        upAction.execute();
     }
-
     @Override
     public void down() {
-        downAction.run();
+        downAction.execute();
     }
-
     @Override
     public void left() {
-        leftAction.run();
+        leftAction.execute();
     }
-
     @Override
-    public void right() {
-        rightAction.run();
-    }
-
+    public void right() { rightAction.execute(); }
     @Override
     public void start() {
-        startAction.run();
+        startAction.execute();
     }
-
     @Override
     public void select() {
-        selectAction.run();
+        selectAction.execute();
     }
-
     @Override
     public void A() {
-        AAction.run();
+        AAction.execute();
     }
-
     @Override
     public void B() {
-        BAction.run();
+        BAction.execute();
     }
-
-
     @Override
-    public void onUpListener(Runnable up) {
+    public void onUp(ButtonCallback up) {
         this.upAction = up;
     }
-
     @Override
-    public void onDownListener(Runnable down) {
+    public void onDown(ButtonCallback down) {
         this.downAction = down;
     }
-
     @Override
-    public void onLeftListener(Runnable left) {
-        this.leftAction = left;
-    }
-
+    public void onLeft(ButtonCallback left) { this.leftAction = left; }
     @Override
-    public void onRightListener(Runnable right) {
-        this.rightAction = right;
-    }
-
+    public void onRight(ButtonCallback right) { this.rightAction = right; }
     @Override
-    public void onStartListener(Runnable start) {
+    public void onStart(ButtonCallback start) {
         this.startAction = start;
     }
-
     @Override
-    public void onSelectListener(Runnable select) {
+    public void onSelect(ButtonCallback select) {
         this.selectAction = select;
     }
-
     @Override
-    public void onAListener(Runnable A) {
+    public void onA(ButtonCallback A) {
         this.AAction = A;
     }
-
     @Override
-    public void onBListener(Runnable B) {
+    public void onB(ButtonCallback B) {
         this.BAction = B;
     }
 }

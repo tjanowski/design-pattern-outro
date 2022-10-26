@@ -1,51 +1,51 @@
 package game.mario;
 
-import console.ControllerEventSubscriber;
+import com.google.common.collect.Sets;
 
-import java.util.Queue;
+import javax.inject.Singleton;
+import java.util.Set;
 
-public class MarioController {
+/**
+ * The purpose of #MarioController is to allow a subscriber to be informed of actions performed by Mario
+ */
+@Singleton
+public class MarioController implements MarioAction, MarioEventSubscriber {
+    private final Set<MarioEventListener> marioEventListeners = Sets.newConcurrentHashSet();
 
-
-    private final Queue<Event> sharedEventsQueue;
-
-    public MarioController(ControllerEventSubscriber eventSubscriber, Queue<Event> sharedEventsQueue) { // TODO: Decorator
-
-        eventSubscriber.onUpListener(() -> System.out.println("Not used"));
-        eventSubscriber.onUpListener(this::Crouch);
-        eventSubscriber.onLeftListener(this::MoveBackward);
-        eventSubscriber.onRightListener(this::MoveForward);
-        eventSubscriber.onStartListener(this::Start);
-        eventSubscriber.onSelectListener(this::Pause);
-        eventSubscriber.onAListener(this::Jump);
-        eventSubscriber.onBListener(this::Run);
-
-        this.sharedEventsQueue = sharedEventsQueue;
+    @Override
+    public void subscribe(MarioEventListener marioEventListener) {
+        marioEventListeners.add(marioEventListener);
     }
 
-    public void Crouch() {
-        sharedEventsQueue.add(Event.CROUCH);
+    @Override
+    public void moveLeft() {
+        notify(MarioEvent.MOVE_BACKWARD);
     }
 
-    public void MoveBackward() {
-        sharedEventsQueue.add(Event.MOVE_BACKWARD);
+    @Override
+    public void moveRight() { notify(MarioEvent.MOVE_FORWARD); }
+
+    @Override
+    public void run() {
+        notify(MarioEvent.RUN);
     }
 
-    public void MoveForward() {
-        sharedEventsQueue.add(Event.MOVE_FORWARD);
+    @Override
+    public void jump() {
+        notify(MarioEvent.JUMP);
     }
 
-    public void Start() {
-        sharedEventsQueue.add(Event.START);
+    @Override
+    public void crouch() {
+        notify(MarioEvent.CROUCH);
     }
 
-    public void Pause() {
-        sharedEventsQueue.add(Event.PAUSE);
+    @Override
+    public void start() {
+        notify(MarioEvent.START);
     }
 
-    public void Jump() { sharedEventsQueue.add(Event.JUMP); }
-
-    public void Run() {
-        sharedEventsQueue.add(Event.RUN);
+    private void notify(MarioEvent marioEvent) {
+        marioEventListeners.forEach(marioEventListener -> marioEventListener.actionPerformed(marioEvent));
     }
 }

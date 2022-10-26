@@ -1,34 +1,59 @@
 package console;
 
-import game.mario.Mario;
+import game.Game;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class NES {
+import java.util.Objects;
+import java.util.Stack;
 
-    public static void main(String[] args) {
+public class NES implements Console {
+    private static final Logger LOG = LoggerFactory.getLogger(NES.class);
+    private static final int MAX_CONTROLLER_SLOT = 2;
 
-        NesController controller = new NesController();
-        Mario marioGame = new Mario(controller);
-        marioGame.play();
+    private final Stack<Controller> controllers = new Stack<>();
+    private Game game;
 
-        controller.right();
-        controller.right();
-        controller.right();
+    @Override
+    public void load(Game game) {
+        this.game = game;
+    }
 
+    @Override
+    public void unload() {
+        this.game = null;
+    }
 
-        controller.left();
-        controller.left();
-        controller.left();
+    @Override
+    public void powerOn() {
+        if (Objects.nonNull(game)) {
+            game.play();
+        } else {
+            LOG.error("No game in console");
+        }
+    }
 
-        controller.right();
-        controller.right();
-        controller.right();
+    @Override
+    public void powerOff() {
+        LOG.info("Switching off");
+    }
 
+    @Override
+    public void plugController(Controller controller) {
+        if (controllers.size() < MAX_CONTROLLER_SLOT) {
+            controllers.push(controller);
+        } else {
+            LOG.warn("NES has only {} slots", MAX_CONTROLLER_SLOT);
+        }
+    }
 
-        controller.A();
-        controller.left();
-        controller.left();
-        controller.left();
-
+    @Override
+    public void unplugController() {
+        if (controllers.size() > 0) {
+            controllers.pop();
+        } else {
+            LOG.warn("No controller plugged");
+        }
     }
 
 }
