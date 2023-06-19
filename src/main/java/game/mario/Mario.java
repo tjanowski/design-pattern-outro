@@ -3,7 +3,6 @@ package game.mario;
 import game.Game;
 import lombok.SneakyThrows;
 
-import javax.inject.Inject;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -29,7 +28,6 @@ public class Mario implements Game {
     private final Point currentMarioPosition = new Point(0, 0);
     private final LinkedBlockingDeque<MarioEvent> actions = new LinkedBlockingDeque<>();
 
-    @Inject
     public Mario(MarioEventSubscriber eventManager) {
         // Every MarioEvent triggered by the #MarioController will be added to an event queue
         eventManager.subscribe(actions::add);

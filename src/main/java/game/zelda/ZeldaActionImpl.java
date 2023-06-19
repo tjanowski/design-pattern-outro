@@ -1,12 +1,12 @@
 package game.zelda;
 
-import com.google.common.collect.Sets;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public class ZeldaActionImpl implements ZeldaAction, EventSubscriber<Consumer<Runnable>> {
 
-    private final Set<Consumer<Runnable>> zeldaEventListeners = Sets.newConcurrentHashSet();
+    private final Set<Consumer<Runnable>> zeldaEventListeners = new HashSet<>();
     private volatile boolean pause = false;
 
     @Override

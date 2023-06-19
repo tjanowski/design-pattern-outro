@@ -1,16 +1,13 @@
 package game.mario;
 
-import com.google.common.collect.Sets;
-
-import javax.inject.Singleton;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * The purpose of #MarioController is to allow a subscriber to be informed of actions performed by Mario
  */
-@Singleton
 public class MarioController implements MarioAction, MarioEventSubscriber {
-    private final Set<MarioEventListener> marioEventListeners = Sets.newConcurrentHashSet();
+    private final Set<MarioEventListener> marioEventListeners = new HashSet<>();
 
     @Override
     public void subscribe(MarioEventListener marioEventListener) {
