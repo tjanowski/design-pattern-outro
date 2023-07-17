@@ -21,7 +21,7 @@ public class Application {
         return new NesController();
     }
     @Bean
-    MarioEventSubscriber marioEventSubscriber(NesController cc) {
+    MarioEventSubscriber marioEventSubscriber(ControllerCallback cc) {
         var mc = new MarioController();
         new ControllerMapper(cc, mc);
         return mc;
